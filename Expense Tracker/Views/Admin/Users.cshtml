@@ -1,0 +1,47 @@
+﻿@model UserViewModel
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Додати користувача" : "Редагувати користувача";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="AddOrEditUser" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="UserName" class="form-label">Ім'я користувача</label>
+            <input asp-for="UserName" class="form-control" placeholder="Введіть ім'я" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Електронна пошта</label>
+            <input asp-for="Email" class="form-control" placeholder="Введіть email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Role" class="form-label">Роль</label>
+            <select asp-for="Role" class="form-control">
+                <option value="User">Користувач</option>
+                <option value="Admin">Адміністратор</option>
+            </select>
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label">Пароль</label>
+            <input asp-for="Password" class="form-control" placeholder="Введіть пароль" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            @if (Model.Id != 0)
+            {
+                <small class="text-muted">Залиште порожнім, якщо не хочете змінювати пароль</small>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-primary">Зберегти</button>
+        <a href="@Url.Action("UsersList", "Admin")" class="btn btn-secondary">Скасувати</a>
+    </form>
+</div>
